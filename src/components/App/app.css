@@ -36,3 +36,8 @@ span {
 	font-size: 14px;
 	text-align: center;
 }
+
+.video_session_details {
+	display: flex;
+	align-items: center;
+}

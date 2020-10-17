@@ -5,9 +5,9 @@ import Participant from "../Participant/Participant";
 import LocalParticipant from "../Participant/LocalParticipant";
 import EventSubscriber from "../EventSubscriber/EventSubscriber";
 import { mapToArray } from "../../utils";
-import TimerIcon from '@material-ui/icons/Timer';
+import TimerIcon from "@material-ui/icons/Timer";
 
-import Container from "@material-ui/core/Container";
+import Timer from "../Timer";
 import "./videoroom.css";
 
 const EVENTS = [
@@ -43,11 +43,22 @@ class VideoRoom extends PureComponent {
 				events={EVENTS}
 				eventEmitterObject={videoRoom}
 				onUpdate={this.update}>
-					<div
+				<div
 					className={` ${
-						!isEmpty(remoteParticipants) ? "active_timer_container " : "inactive_timer_container"
+						!isEmpty(remoteParticipants)
+							? "active_timer_container "
+							: "inactive_timer_container"
 					}`}>
-					<span><TimerIcon  size="small" /></span> <span>0:0:00</span>
+					{!isEmpty(remoteParticipants) ? (
+						<>
+							<span>
+								<TimerIcon size='small' />
+							</span>
+							<Timer />
+						</>
+					) : (
+						<span>No participants</span>
+					)}
 				</div>
 				<div
 					className={`local_video_container ${
@@ -68,8 +79,6 @@ class VideoRoom extends PureComponent {
 }
 
 export default VideoRoom;
-
-
 
 /**
  * 

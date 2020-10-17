@@ -8,18 +8,15 @@ import MicOffIcon from "@material-ui/icons/MicOff";
 import PresentToAllIcon from "@material-ui/icons/PresentToAll";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import VideocamOffIcon from "@material-ui/icons/VideocamOff";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import React, { useState } from "react";
-import {
-	muteAudio,
-	unMuteAudio,
-	muteVideo,
-	unMuteVideo,
-} from "../../utils/index";
+
 
 import VideoRoom from "../VideoRoom/VideoRoom";
 import "./app.css";
 import AppContainer from "./AppContainer";
 
+export const EndCallContext = React.createContext("");
 const App = ({
 	videoRoom,
 	userName,
@@ -74,12 +71,13 @@ const App = ({
 		if (name === setMic) {
 			if (mic) {
 				videoRoom.localParticipant.audioTracks.forEach((audio) => {
-					console.log(audio.track);
 					audio.track.disable();
 				});
 			} else {
 				//enable
-				console.log("mic enable");
+				videoRoom.localParticipant.audioTracks.forEach((audio) => {
+					audio.track.enable();
+				});
 			}
 		}
 
@@ -88,14 +86,12 @@ const App = ({
 				//disable
 
 				videoRoom.localParticipant.videoTracks.forEach((video) => {
-					console.log(video.track);
 					video.track.disable();
 				});
 			} else {
 				//enable
 
 				videoRoom.localParticipant.videoTracks.forEach((item) => {
-					console.log(item.track);
 					item.track.enable();
 				});
 			}
@@ -110,7 +106,7 @@ const App = ({
 		content = videoRoom && (
 			<>
 				<div className='video_container'>
-					<VideoRoom videoRoom={videoRoom} />
+					<VideoRoom videoRoom={videoRoom} onLeave={onLeave} />
 					<div className='control_bar'>
 						<audio className='audio-element'>
 							<source src='https://assets.coderrocketfuel.com/pomodoro-times-up.mp3' />
@@ -119,6 +115,9 @@ const App = ({
 							<Grid item>
 								<div className='video_session_details'>
 									<span>session details</span>
+									<span>
+										<ArrowDropDownIcon />
+									</span>
 								</div>
 							</Grid>
 							<Grid item>
@@ -190,8 +189,9 @@ const App = ({
 
 	return (
 		<>
-			{/* {errorMessage ? Error(`${errorMessage}`) : null} */}
-			{content}
+			<EndCallContext.Provider value={onLeave}>
+				{content}
+			</EndCallContext.Provider>
 		</>
 	);
 };

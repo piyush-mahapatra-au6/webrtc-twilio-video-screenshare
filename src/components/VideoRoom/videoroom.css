@@ -1,0 +1,40 @@
+.local_video_container,
+.remote_video_container {
+	background: black;
+	height: 100%;
+}
+.disable_local_container {
+	display: none;
+}
+video {
+	height: 100vh;
+	object-fit: cover;
+}
+.inactive_local_container {
+	width: 250px;
+	height: 250px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 50;
+}
+.inactive_local_container video {
+	height: 100%;
+}
+
+.inactive_timer_container {
+	display: none;
+}
+
+.active_timer_container {
+	position: fixed;
+	display: block;
+	top: 1.5rem;
+	left: 1.5rem;
+	padding: 1rem;
+	border-radius: 0px 8px 0px 8px;
+	background-color: aliceblue;
+	color: black;
+	font-weight: bolder;
+	z-index: 50;
+}
